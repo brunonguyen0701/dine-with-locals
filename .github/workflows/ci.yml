@@ -85,4 +85,15 @@ jobs:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
-        run: docker run -d -p 3000:3000 --name local-taste-backend-container bruno0701/local-taste-backend:latest
+        run: |
+          docker run -d -p 3000:3000 \
+            -e MONGO_URI="${MONGO_URI}" \
+            -e CLOUDINARY_CLOUD_NAME="${CLOUDINARY_CLOUD_NAME}" \
+            -e CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}" \
+            -e CLOUDINARY_API_SECRET="${CLOUDINARY_API_SECRET}" \
+            -e SECRET="${SECRET}" \
+            -e GOOGLE_MAPS_API_KEY="${GOOGLE_MAPS_API_KEY}" \
+            -e STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY}" \
+            -e STRIPE_PUBLISHABLE_KEY="${STRIPE_PUBLISHABLE_KEY}" \
+            --name local-taste-backend-container \
+            bruno0701/local-taste-backend:latest
