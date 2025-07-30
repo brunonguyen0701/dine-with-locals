@@ -86,7 +86,7 @@ jobs:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
         run: |
-          docker run -d -p 3000:3000 \
+          docker run -d -p 4000:4000 \
             -e MONGO_URI="${MONGO_URI}" \
             -e CLOUDINARY_CLOUD_NAME="${CLOUDINARY_CLOUD_NAME}" \
             -e CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}" \
