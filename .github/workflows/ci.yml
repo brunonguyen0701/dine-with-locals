@@ -58,7 +58,9 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker Image
-        run: docker build -t bruno0701/local-taste-backend .
+        run: |
+          cd server
+          docker build -t bruno0701/local-taste-backend .
 
       - name: Push Docker Image
         run: docker push bruno0701/local-taste-backend:latest
