@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI & CD Pipeline
 
 on:
   push:
@@ -45,10 +45,30 @@ jobs:
       - name: Run tests
         run: npm run test:ci
 
-      - name: Build application
-        run: npm run build
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4   
 
-      - name: Check build artifacts
-        run: |
-          echo "✅ Backend build size: $(du -sh server/dist/ | cut -f1)"
-          echo "✅ Frontend build size: $(du -sh client/dist/ | cut -f1)"
+      - name: Login to Docker hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t bruno0701/local-taste-backend .
+
+      - name: Push Docker Image
+        run: docker push bruno0701/local-taste-backend:latest
+
+  deploy:
+    needs: [test, build]
+    runs-on: self-hosted
+    steps:
+      - name: Pull Docker Image
+        run: docker pull bruno0701/local-taste-backend:latest
+
+      - name: Delete old containers
+        run: docker rm -f local-taste-backend-container
+
+      - name: Run Docker Container
+        run: docker run -d -p 3000:3000 --name local-taste-backend-container -e MONGO_URI=${{ secrets.MONGO_URI }} -e CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} -e CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }} -e CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }} -e SECRET=${{ secrets.SECRET }} -e GOOGLE_MAPS_API_KEY=${{ secrets.GOOGLE_MAPS_API_KEY }} -e STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }} -e STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} bruno0701/local-taste-backend:latest
