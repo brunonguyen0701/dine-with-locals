@@ -112,8 +112,8 @@ app.use('/api/payment', paymentRoutes);
 // });
 
 // Start server
-const PORT = Number(process.env.PORT) || 4000;
-const HOST = process.env.HOST || '0.0.0.0'; // Bind to all interfaces for EC2
+const PORT = 4000;
+const HOST = '0.0.0.0'; // Bind to all interfaces for EC2
 
 httpServer.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
