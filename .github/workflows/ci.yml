@@ -87,6 +87,7 @@ jobs:
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
           HOST: ${{ secrets.HOST }}
           PORT: ${{ secrets.PORT }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
         run: |
           docker run -d -p 4000:4000 \
             -e MONGO_URI="${MONGO_URI}" \
@@ -99,5 +100,6 @@ jobs:
             -e STRIPE_PUBLISHABLE_KEY="${STRIPE_PUBLISHABLE_KEY}" \
             -e HOST="${HOST}" \
             -e PORT="${PORT}" \
+            -e NODE_ENV="${NODE_ENV}" \
             --name local-taste-backend-container \
             bruno0701/local-taste-backend:latest
