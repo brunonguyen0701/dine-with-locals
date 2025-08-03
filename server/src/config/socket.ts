@@ -13,7 +13,19 @@ export const initializeSocket = (server: HTTPServer) => {
   const io = new SocketIOServer(server, {
     pingTimeout: 60000,
     cors: {
-      origin: true, // Accept all origins temporarily
+      origin:
+        process.env.NODE_ENV === 'production'
+          ? [
+              process.env.FRONTEND_URL || 'https://your-frontend-domain.com',
+              // Add your actual deployed frontend URLs
+              // 'https://your-s3-bucket.s3-website-region.amazonaws.com',
+              // 'https://your-cloudfront-distribution.cloudfront.net'
+            ]
+          : [
+              'http://localhost:5173',
+              'http://localhost:3000',
+              'http://127.0.0.1:5173',
+            ],
       methods: ['GET', 'POST'],
       credentials: true,
     },

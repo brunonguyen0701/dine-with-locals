@@ -51,12 +51,41 @@ connectDB();
 //Parse user request -> Json format
 app.use(express.json());
 //Only receive request from some specific routes.
+// app.use(
+//   cors({
+//     origin: true, // Accept all origins temporarily
+//     credentials: true,
+//   }),
+// );
+
+// CORS configuration for production
 app.use(
   cors({
-    origin: true, // Accept all origins temporarily
+    origin: process.env.NODE_ENV === 'production' 
+      ? [
+          process.env.FRONTEND_URL || 'https://your-s3-bucket.s3-website-region.amazonaws.com',
+          // Add your CloudFront distribution URL when you set it up
+          // 'https://your-cloudfront-distribution.cloudfront.net'
+        ]
+      : [
+          'http://localhost:5173', 
+          'http://localhost:3000',
+          'http://127.0.0.1:5173'
+        ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
   }),
 );
+
+// Health check endpoint for AWS health checks
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
@@ -75,10 +104,20 @@ app.use('/api/chat', chatRoutes);
 app.use('/api/message', messageRoutes);
 app.use('/api/payment', paymentRoutes);
 
+// // Start server
+// const PORT = process.env.PORT || 3000;
+// httpServer.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+//   console.log('Socket.IO initialized and listening for connections');
+// });
+
 // Start server
-const PORT = process.env.PORT || 3000;
-httpServer.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+const PORT = Number(process.env.PORT) || 3000;
+const HOST = process.env.HOST; // Bind to all interfaces for EC2
+
+httpServer.listen(PORT, HOST, () => {
+  console.log(`Server running on http://${HOST}:${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log('Socket.IO initialized and listening for connections');
 });
 

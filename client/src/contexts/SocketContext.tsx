@@ -44,17 +44,32 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
     console.log('Initializing socket connection for user:', currentUser._id);
 
     // Initialize socket connection
+    // const socketInstance = io(
+    //   import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/',
+    //   {
+    //     query: {
+    //       userId: currentUser._id,
+    //       token: localStorage.getItem('token'),
+    //     }, // this sends the userId as param for auth in BE
+    //     withCredentials: true,
+    //     forceNew: true, // Force a new connection
+    //   },
+    // );
+
+    // Initialize socket connection in Production Stage
     const socketInstance = io(
-      import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/',
-      {
-        query: {
-          userId: currentUser._id,
-          token: localStorage.getItem('token'),
-        }, // this sends the userId as param for auth in BE
-        withCredentials: true,
-        forceNew: true, // Force a new connection
-      },
-    );
+  process.env.NODE_ENV === 'production' 
+    ? process.env.VITE_API_BASE_URL || 'https://your-ec2-domain.com'
+    : import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/',
+  {
+    query: {
+      userId: currentUser._id,
+      token: localStorage.getItem('token'),
+    },
+    withCredentials: true,
+    forceNew: true,
+  },
+);
 
     setSocket(socketInstance);
 

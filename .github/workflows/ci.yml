@@ -85,6 +85,8 @@ jobs:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          HOST: ${{ secrets.HOST }}
+          PORT: ${{ secrets.PORT }}
         run: |
           docker run -d -p 4000:4000 \
             -e MONGO_URI="${MONGO_URI}" \
@@ -95,5 +97,7 @@ jobs:
             -e GOOGLE_MAPS_API_KEY="${GOOGLE_MAPS_API_KEY}" \
             -e STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY}" \
             -e STRIPE_PUBLISHABLE_KEY="${STRIPE_PUBLISHABLE_KEY}" \
+            -e HOST="${HOST}" \
+            -e PORT="${PORT}" \
             --name local-taste-backend-container \
             bruno0701/local-taste-backend:latest
