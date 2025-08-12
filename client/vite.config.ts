@@ -4,9 +4,21 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+  // resolve: {
+  //   alias: {
+  //     '@': path.resolve(__dirname, './src'),
+  //   },
+  // },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+        }
+      }
+    }
   },
 });

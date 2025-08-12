@@ -63,14 +63,10 @@ app.use(
   cors({
     origin: process.env.NODE_ENV === 'production' 
       ? [
-          process.env.FRONTEND_URL || 'https://your-s3-bucket.s3-website-region.amazonaws.com',
-          // Add your CloudFront distribution URL when you set it up
-          // 'https://your-cloudfront-distribution.cloudfront.net'
+          'https://30qoq99ogjwuz.cloudfront.net'
         ]
       : [
-          'http://localhost:5173', 
-          'http://localhost:3000',
-          'http://127.0.0.1:5173'
+          'http://localhost:5173', // Development frontend URL
         ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
@@ -113,7 +109,7 @@ app.use('/api/payment', paymentRoutes);
 
 // Start server
 const PORT = 4000;
-const HOST = '0.0.0.0'; // Bind to all interfaces for EC2
+const HOST = '0.0.0.0';
 
 httpServer.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
