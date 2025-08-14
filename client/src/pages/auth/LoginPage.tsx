@@ -38,7 +38,7 @@ function LoginPage() {
 
   return (
     <>
-      <div className="grid grid-cols-2 w-full bg-blue-500 h-full">
+      <div className="grid grid-cols-2 w-full bg-brand-coral-100 h-full">
         {/* Login landing component */}
         <LoginLandingPage />
         {/* Login Card for User's input */}
