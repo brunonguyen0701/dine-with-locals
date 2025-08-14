@@ -6,7 +6,6 @@ import { jwtDecode } from 'jwt-decode';
 import { getUserById } from '../../services/UserService';
 import { useUserContext } from '../useUserContext';
 import { AuthenticatedUser } from '../../../../shared/types/User';
-import { i } from 'node_modules/react-router/dist/development/lib-C1JSsICm.d.mts';
 // import BASE_URL from '../../../../shared/constants/constants';
 
 export const useLogin = () => {
