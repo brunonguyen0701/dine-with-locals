@@ -63,7 +63,7 @@ app.use(
   cors({
     origin: process.env.NODE_ENV === 'production' 
       ? [
-          'https://30qoq99ogjwuz.cloudfront.net'
+          'https://production.d2f73jx3yxyn71.amplifyapp.com/'
         ]
       : [
           'http://localhost:5173', // Development frontend URL

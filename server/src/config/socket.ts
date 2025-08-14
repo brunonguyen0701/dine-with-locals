@@ -16,7 +16,7 @@ export const initializeSocket = (server: HTTPServer) => {
       origin:
         process.env.NODE_ENV === 'production'
           ? [
-              'https://30qoq99ogjwuz.cloudfront.net'
+              'https://production.d2f73jx3yxyn71.amplifyapp.com/'
             ]
           : [
               'http://localhost:5173', // Local development URL
