@@ -63,14 +63,14 @@ app.use(
   cors({
     origin: process.env.NODE_ENV === 'production' 
       ? [
-          'https://production.d2f73jx3yxyn71.amplifyapp.com/'
+          'https://production.d2f73jx3yxyn71.amplifyapp.com'
         ]
       : [
           'http://localhost:5173', // Development frontend URL
         ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token', 'X-Amz-Date', 'X-Api-Key', 'X-Amz-Security-Token'],
   }),
 );
 

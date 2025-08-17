@@ -16,12 +16,13 @@ export const initializeSocket = (server: HTTPServer) => {
       origin:
         process.env.NODE_ENV === 'production'
           ? [
-              'https://production.d2f73jx3yxyn71.amplifyapp.com/'
+              'https://production.d2f73jx3yxyn71.amplifyapp.com'
             ]
           : [
               'http://localhost:5173', // Local development URL
             ],
       methods: ['GET', 'POST'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token', 'X-Amz-Date', 'X-Api-Key', 'X-Amz-Security-Token'],
       credentials: true,
     },
   });
