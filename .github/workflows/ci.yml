@@ -87,6 +87,8 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           VITE_STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
         run: |
           cd client
           npm run build
@@ -114,10 +116,8 @@ jobs:
           CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
           CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
           SECRET: ${{ secrets.SECRET }}
-          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
           GOOGLE_AUTH_CLIENT_ID: ${{ secrets.GOOGLE_AUTH_CLIENT_ID }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
-          STRIPE_PUBLISHABLE_KEY: ${{ secrets.STRIPE_PUBLISHABLE_KEY }}
           NODE_ENV: ${{ secrets.NODE_ENV }}
         run: |
           docker run -d -p 4000:4000 \
@@ -126,10 +126,8 @@ jobs:
             -e CLOUDINARY_API_KEY="${CLOUDINARY_API_KEY}" \
             -e CLOUDINARY_API_SECRET="${CLOUDINARY_API_SECRET}" \
             -e SECRET="${SECRET}" \
-            -e VITE_GOOGLE_MAPS_API_KEY="${VITE_GOOGLE_MAPS_API_KEY}" \
             -e GOOGLE_AUTH_CLIENT_ID="${GOOGLE_AUTH_CLIENT_ID}" \
             -e STRIPE_SECRET_KEY="${STRIPE_SECRET_KEY}" \
-            -e STRIPE_PUBLISHABLE_KEY="${STRIPE_PUBLISHABLE_KEY}" \
             -e NODE_ENV="${NODE_ENV}" \
             --name local-taste-backend-container \
             bruno0701/local-taste-backend:latest
